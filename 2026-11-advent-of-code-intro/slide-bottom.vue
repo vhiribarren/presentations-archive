@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { useSlideContext } from '@slidev/client'
 
-const { $slidev, $frontmatter } = useSlideContext()
+const { $slidev, $frontmatter, $page, $nav } = useSlideContext()
 
 const DATE = 'November 2026'
 
@@ -11,7 +11,7 @@ const hideFooter = computed(() => ['cover', 'section', 'end'].includes($frontmat
 
 <template>
   <div v-if="!hideFooter" class="slide-footer">
-    <span class="stars">*</span>
+    <span class="page"><span class="stars">*</span> {{ $page }} / {{ $nav.total }}</span>
     <span class="meta">{{ $slidev.configs.author }} · {{ $slidev.configs.title }} · {{ DATE }}</span>
   </div>
 </template>
@@ -32,6 +32,9 @@ const hideFooter = computed(() => ['cover', 'section', 'end'].includes($frontmat
 .slide-footer .stars {
   color: var(--aoc-star);
   text-shadow: 0 0 5px var(--aoc-star);
+}
+.slide-footer .page {
+  color: var(--aoc-dim);
 }
 .slide-footer .meta {
   color: var(--aoc-dim);
