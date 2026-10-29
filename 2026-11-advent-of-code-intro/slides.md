@@ -202,6 +202,69 @@ They provide two gold stars: **
 
 ---
 
+# Simple… or not
+
+<div class="grid grid-cols-2 gap-8 simple">
+<div>
+
+### 2022 · Day 1: Calorie Counting
+
+```python
+from pathlib import Path
+
+INPUT = Path(__file__).parent / "../inputs/day_1.txt"
+
+elves = INPUT.read_text().split("\n\n")
+calories = sorted(
+    (sum(map(int, elf.split())) for elf in elves),
+    reverse=True,
+)
+
+print("Part 1:", calories[0])
+print("Part 2:", sum(calories[:3]))
+```
+
+</div>
+<div>
+
+### 2024 · Day 11: Plutonian Pebbles
+
+```python
+from functools import cache
+from pathlib import Path
+
+INPUT = Path(__file__).parent / "../inputs/day_11.txt"
+
+@cache
+def convert_stone(stone: int) -> tuple[int, ...]:
+    if stone == 0: return (1,)
+    digits = str(stone)
+    if len(digits) % 2 == 0:
+        half = len(digits) // 2
+        return (int(digits[:half]), int(digits[half:]))
+    return (stone * 2024,)
+
+@cache
+def compute_len(stone: int, iter_nb: int) -> int:
+    if iter_nb == 0: return 1
+    return sum(compute_len(new_stone, iter_nb - 1)
+               for new_stone in convert_stone(stone))
+
+stones = list(map(int, INPUT.read_text().split()))
+print("Part 1:", sum(compute_len(s, 25) for s in stones))
+print("Part 2:", sum(compute_len(s, 75) for s in stones))
+```
+
+</div>
+</div>
+
+<style>
+.slidev-layout { --slidev-code-font-size: 0.62rem; --slidev-code-line-height: 1.3; }
+.simple h3 { font-size: 1.05rem; margin-top: 0; margin-bottom: 0.5rem; }
+</style>
+
+---
+
 # The right mindset
 
 - **You don't have to finish.** Skipping a day is fine
@@ -258,31 +321,6 @@ You'll meet these ideas one puzzle at a time, and that's where the learning is.
 .langs .head .pro { color: var(--aoc-green); text-shadow: 0 0 5px var(--aoc-green); }
 .langs .head .con { color: var(--aoc-red); text-shadow: 0 0 5px var(--aoc-red); }
 </style>
-
----
-
-# A typical Python toolkit
-
-```python
-from collections import Counter, defaultdict, deque
-from functools import cache
-from itertools import combinations, pairwise, product
-import heapq, math, re
-
-def ints(s: str) -> list[int]:
-    return list(map(int, re.findall(r"-?\d+", s)))
-
-# A 2D grid as a dict of complex numbers: 1j is "down", neighbours are p + d
-grid = {complex(x, y): c for y, line in enumerate(open("input.txt").read().splitlines())
-                         for x, c in enumerate(line)}
-DIRS = (1, -1, 1j, -1j)
-```
-
-<div class="mt-4">
-
-Turning `+`/`*` on complex numbers into moves and rotations (`d * 1j` = turn right) saves a lot of `if` statements.
-
-</div>
 
 ---
 
