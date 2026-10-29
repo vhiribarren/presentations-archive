@@ -1,0 +1,86 @@
+/* Advent of Code look: navy background, glowing green, yellow stars. */
+:root {
+  --aoc-bg: #0f0f23;
+  --aoc-panel: #10101a;
+  --aoc-border: #333340;
+  --aoc-text: #cccccc;
+  --aoc-dim: #888899;
+  --aoc-green: #00cc00;
+  --aoc-link: #009900;
+  --aoc-bright: #99ff99;
+  --aoc-star: #ffff66;
+  --aoc-red: #ff4d4d;
+  --slidev-theme-primary: #00cc00;
+}
+
+.slidev-layout {
+  background: var(--aoc-bg);
+  color: var(--aoc-text);
+  font-family: 'Source Code Pro', monospace;
+}
+
+.slidev-layout h1,
+.slidev-layout h2 {
+  color: var(--aoc-green);
+  text-shadow: 0 0 2px var(--aoc-green), 0 0 5px var(--aoc-green);
+  font-weight: 400;
+}
+
+/* Puzzle titles look like "--- Day 1: Title ---" */
+.slidev-layout.default h1::before { content: '--- '; }
+.slidev-layout.default h1::after { content: ' ---'; }
+.slidev-layout.default h1 {
+  font-size: 1.6rem;
+  margin-bottom: 1.2rem;
+}
+
+.slidev-layout h3 {
+  color: var(--aoc-bright);
+  font-weight: 400;
+}
+
+.slidev-layout a {
+  color: var(--aoc-link);
+  border-bottom: none;
+  text-decoration: none;
+}
+.slidev-layout a:hover { color: var(--aoc-bright); }
+
+.slidev-layout strong { color: #ffffff; text-shadow: 0 0 5px #ffffff; font-weight: 400; }
+.slidev-layout em { color: var(--aoc-star); font-style: normal; text-shadow: 0 0 5px var(--aoc-star); }
+
+.slidev-layout li::marker { color: var(--aoc-green); }
+
+.slidev-layout code:not(pre code) {
+  background: var(--aoc-panel);
+  border: 1px solid var(--aoc-border);
+  color: var(--aoc-text);
+  padding: 0 0.25em;
+}
+
+.slidev-layout pre.shiki,
+.slidev-layout .slidev-code {
+  background: var(--aoc-panel) !important;
+  border: 1px solid var(--aoc-border);
+}
+
+.slidev-layout table { font-size: 0.85em; }
+.slidev-layout th { color: var(--aoc-green); font-weight: 400; }
+.slidev-layout td, .slidev-layout th { border-color: var(--aoc-border); }
+
+.slidev-layout blockquote {
+  border-left-color: var(--aoc-green);
+  background: var(--aoc-panel);
+  color: var(--aoc-text);
+}
+
+.star { color: var(--aoc-star); text-shadow: 0 0 5px var(--aoc-star); }
+.dim { color: var(--aoc-dim); }
+.warn { color: var(--aoc-red); }
+
+/* Framed box, like the puzzle example blocks */
+.box {
+  border: 1px solid var(--aoc-border);
+  background: var(--aoc-panel);
+  padding: 0.8rem 1rem;
+}
