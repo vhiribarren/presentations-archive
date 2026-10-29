@@ -141,12 +141,6 @@ You could do this any time of the year. *Advent of Code is when everyone does it
 4. Submit the answer (just a number or a string) <span class="star">*</span>
 5. Part 2 unlocks: same input, a twist on the problem <span class="star">*</span>
 
-<div class="box mt-8 text-center text-lg">
-
-Let's look: [adventofcode.com](https://adventofcode.com/2016)
-
-</div>
-
 </div>
 <div>
 
@@ -167,6 +161,12 @@ Your puzzle answer was 21607792.
 Both parts of this puzzle are complete!
 They provide two gold stars: **
 ```
+
+<div class="box mt-6 text-center text-lg">
+
+Let's look: [adventofcode.com](https://adventofcode.com/2016)
+
+</div>
 
 </div>
 </div>
