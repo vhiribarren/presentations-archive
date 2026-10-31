@@ -58,9 +58,18 @@ class: text-center aoc-cover
 
 </div>
 
+<div class="cheer">
+<div class="face"><span class="y">*</span> \(^o^)/ <span class="y">*</span></div>
+<div class="go">Let's go!</div>
+</div>
+
 <style>
-.agenda { font-size: 1.3rem; line-height: 2.4; margin-top: 1.5rem; }
+.agenda { font-size: 1.3rem; line-height: 2.2; margin-top: 1rem; }
 .agenda .day { display: inline-block; width: 6rem; color: var(--aoc-dim); }
+.cheer { text-align: center; margin-top: 2.5rem; }
+.cheer .face { font-size: 2.4rem; color: var(--aoc-text); white-space: nowrap; }
+.cheer .y { color: var(--aoc-star); text-shadow: 0 0 5px var(--aoc-star); font-size: 1.6rem; vertical-align: middle; }
+.cheer .go { color: var(--aoc-green); text-shadow: 0 0 5px var(--aoc-green); font-size: 1.2rem; margin-top: 0.6rem; }
 </style>
 
 ---
@@ -142,7 +151,7 @@ You could do this any time of the year. *Advent of Code is when everyone does it
 # How a day works
 
 <div class="grid grid-cols-2 gap-8">
-<div>
+<div class="flex items-center justify-center day-flow">
 
 <pre class="ascii">[ <span class="t">read the story   </span> ]
           |
@@ -183,6 +192,10 @@ Let's look: [adventofcode.com](https://adventofcode.com/2016)
 
 </div>
 </div>
+
+<style>
+.day-flow pre.ascii { line-height: 1.6; }
+</style>
 
 ---
 
@@ -417,6 +430,12 @@ You'll meet these ideas one puzzle at a time, and that's where the learning is.
 - Constraints, boolean circuits
 - Small VMs to reverse-engineer
 
+<div class="box mt-6">
+
+Just **know the formulas exist**. *Wikipedia* or *an&nbsp;LLM* is your friend for the details.
+
+</div>
+
 </div>
 </div>
 
@@ -433,30 +452,52 @@ You'll meet these ideas one puzzle at a time, and that's where the learning is.
 
 [Z3](https://github.com/Z3Prover/z3) is an SMT solver: describe the constraints, let it find a solution.
 
-```python
-from z3 import Int, Solver
+<div class="grid grid-cols-[3fr_2fr] gap-8 mt-4 solver">
+<div>
 
-x, y, z, vx, vy, vz = (Int(n) for n in "x y z vx vy vz".split())
-s = Solver()
-for i, (px, py, pz, dx, dy, dz) in enumerate(hailstones[:3]):
-    t = Int(f"t{i}")
-    s.add(t >= 0,
-          x + vx * t == px + dx * t,
-          y + vy * t == py + dy * t,
-          z + vz * t == pz + dz * t)
-s.check()
-print(s.model().eval(x + y + z))
+### 2025 · Day 10, part 2
+
+```python
+from z3 import Ints, Optimize
+
+a, b, c, d, e, f = Ints("a b c d e f")
+opt = Optimize()
+opt.add(a >= 0, b >= 0, c >= 0, d >= 0, e >= 0, f >= 0)
+opt.add(a + c         == 7,
+        a + b + d     == 10,
+        b + e + f     == 3,
+        c + d + e + f == 10)
+opt.minimize(a + b + c + d + e + f)
+opt.check()
+print(opt.model())
+# [a = 5, b = 0, c = 2, d = 5, e = 3, f = 0]
 ```
 
-<div class="dim text-sm mt-2">2023 day 24: throw a rock that hits every hailstone. A few lines with Z3, a page of linear algebra without.</div>
+<div class="dim explain">Each button adds 1 to some counters. <strong>Unknowns</strong>: presses of each button. <strong>Equations</strong>: every counter reaches its target. <strong>Goal</strong>: the fewest presses.</div>
 
-<div class="box mt-4 text-sm toolbox">
-<strong>Also in the toolbox</strong>: <em>networkx</em> (graphs, min cut) · <em>sympy</em> (symbolic equations) · <em>numpy</em> (grids, matrices) · <em>Graphviz</em> (draw the input, the structure jumps out)
+</div>
+<div class="flex items-center">
+
+<div class="box toolbox w-full">
+
+**Also in the toolbox**
+
+- *networkx*: graphs, min cut, cliques
+- *numpy*: grids, matrices
+- *shapely*: polygons, areas
+
+</div>
+
+</div>
 </div>
 
 <style>
-.slidev-layout { --slidev-code-font-size: 0.75rem; --slidev-code-line-height: 1.35; }
-.toolbox { padding: 0.5rem 1rem; line-height: 1.6; }
+.slidev-layout { --slidev-code-font-size: 0.72rem; --slidev-code-line-height: 1.35; }
+.solver h3 { margin-top: 0; margin-bottom: 0.4rem; font-size: 1.1rem; }
+.solver .explain { font-size: 0.8rem; line-height: 1.5; margin-top: 0.6rem; }
+.solver li { font-size: 0.9rem; line-height: 1.5; margin: 0.2rem 0; }
+.toolbox p { margin: 0 0 0.4rem; }
+.toolbox ul { margin: 0; padding-left: 1.2rem; }
 </style>
 
 ---
@@ -468,9 +509,25 @@ print(s.model().eval(x + y + z))
 - **The example works, the input does not**: the input contains a case the example does not show
 - **Misreading the statement**: sometimes you solve part 2 before part 1 by accident!
 
-<div class="box mt-6">
+<div class="grid grid-cols-[2fr_3fr] gap-8 mt-6 items-center">
+
+<div class="box">
 
 Always run on the **example first**, and turn its expected answer into an `assert`.
+
+</div>
+
+<div class="flex justify-center">
+<pre class="ascii">                .---<span class="d"> adventofcode.com </span>---------.
+                | <span class="t">That&#x27;s not the right answer;</span> |
+                | <span class="t">your answer is too low.</span>      |
+                &#x27;------------------------------&#x27;
+   <span class="d">=========.</span>     <span class="y">?</span>     <span class="d">.==========</span>
+            <span class="d">|</span>     <span class="t">o</span>     <span class="d">|</span>
+            <span class="d">|</span>    <span class="t">/|\</span>    <span class="d">|</span>
+            <span class="d">|</span>    <span class="t">/ \</span>    <span class="d">|</span>
+            <span class="d">&#x27;-----------&#x27;</span></pre>
+</div>
 
 </div>
 
@@ -478,18 +535,39 @@ Always run on the **example first**, and turn its expected answer into an `asser
 
 # Look at your input!
 
+<div class="grid grid-cols-[3fr_2fr] gap-8 items-center">
+<div>
+
 - The general problem is sometimes **intractable**…
 - …but **your input** has a special structure that makes it solvable
 - Cycles that align perfectly, a graph made of independent loops, a VM program that computes something simple
 - Reverse-engineering the input is **part of the game**, not cheating
 
-<div class="box mt-6">
+</div>
+<div class="text-center">
 
-2021 day 24: a 252-instruction program to brute-force over 9¹⁴ inputs? No: 14 blocks, each one a push or pop on a base-26 stack.
-<br>
-2024 day 24: a broken 45-bit adder to fix: draw it with Graphviz, the swapped wires stand out.
+<pre class="ascii maze"><span class="d">ilttfcijtttrcttcfccrcctr</span>
+<span class="d">jitiilciricfrfljrlllcrft</span>
+<span class="d">fiflittllrj##ffftlicfllr</span>
+<span class="d">rirttrcir######tccctrrtl</span>
+<span class="d">crtrttc##########itjcjci</span>
+<span class="d">ftfiftrrj######rjciffrfr</span>
+<span class="d">ftltrfl##########tcftfrc</span>
+<span class="d">rrjlc##############liijf</span>
+<span class="d">trc##################trl</span>
+<span class="d">jlfrrtccrcr##tficllrcirf</span>
+<span class="d">fctlrjrcfri##flrlijfcrjr</span>
+<span class="d">iiirttcitcjjitictlfcflji</span>
+<span class="d">lfttccrffjtjrtjtftlirfjj</span></pre>
+
+<div class="dim text-sm mt-3">Random noise?</div>
 
 </div>
+</div>
+
+<style>
+.slidev-layout pre.maze { font-size: 1.15rem; line-height: 1.1; }
+</style>
 
 ---
 layout: section
@@ -517,7 +595,7 @@ day: 3
 - **Solution Megathread** every day: hundreds of solutions in every language
 - **Help/Question** posts: stuck? Someone hit the same wall
 - **Visualization**: beautiful animations of the puzzles
-- **Upping the Ante**: harder variants, crazy constraints
+- **Extra challenges**: one-liners, odd languages, solutions under 1 ms
 - **Funny**: memes and jokes about the puzzles
 
 </div>
@@ -547,7 +625,6 @@ Let's look: [r/adventofcode](https://www.reddit.com/r/adventofcode/)
 - Puzzle texts **and inputs** are copyrighted by Eric Wastl
 - The FAQ explicitly asks **not to redistribute** them
 - Publishing your **solutions** is fine and encouraged
-- Inputs in a public repo let people rebuild the whole site
 
 </div>
 <div>
@@ -563,6 +640,20 @@ puzzles/
 </div>
 </div>
 
+
+<div class="flex justify-center mt-10 publish">
+<pre class="ascii">  <span class="d">your machine</span>                     <span class="d">public repo</span>
+.--------------------.           .--------------------.
+| <span class="t">src/day01.py</span>       |  ------&gt;  | <span class="t">src/day01.py</span>       |
+| <span class="t">src/day02.py</span>       |  ------&gt;  | <span class="t">src/day02.py</span>       |
+| <span class="d">inputs/</span>            |  <span class="r">---X--&gt;</span>  |                    |
+&#x27;--------------------&#x27;           &#x27;--------------------&#x27;</pre>
+</div>
+
+<style>
+.publish pre.ascii { font-size: 1rem; }
+.ascii .r { color: var(--aoc-red); text-shadow: 0 0 5px var(--aoc-red); }
+</style>
 ---
 
 # LLMs and Advent of Code
@@ -587,15 +678,6 @@ puzzles/
 - → Disable your AI assistant in your AoC folder
 
 </div>
-</div>
-
-<div class="mt-4">
-
-```jsonc
-// .vscode/settings.json
-{ "github.copilot.enable": { "*": false } }
-```
-
 </div>
 
 ---
