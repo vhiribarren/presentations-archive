@@ -4,15 +4,17 @@ import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node
 import { join, resolve } from 'node:path'
 
 // Builds the whole site: the index page, and each Slidev deck listed in
-// presentations.json into _site/<dir>/.
+// presentations.json into _build/<dir>/.
 //
-// Decks are built into .cache/slidev/<dir>/ and only rebuilt when their files
+// Decks are built into _cache/slidev/<dir>/ and only rebuilt when their files
 // (as seen by git, local changes included) or the base path change.
 //
 // PATH_PREFIX is the URL path the site is served from (default `/`).
 
-const CACHE = '.cache/slidev'
-const HASHES = '.cache/slidev-hashes'
+// Presentations live at the root of the repository, one level up.
+const ROOT = '..'
+const CACHE = '_cache/slidev'
+const HASHES = '_cache/slidev-hashes'
 
 function loadPresentations() {
   return JSON.parse(readFileSync('presentations.json', 'utf8'))
@@ -31,18 +33,19 @@ function contentHash(dir, base) {
 }
 
 function buildDeck(dir, base) {
+  const src = join(ROOT, dir)
   const out = resolve(CACHE, dir)
   const stampPath = join(HASHES, dir)
-  const hash = contentHash(dir, base)
+  const hash = contentHash(src, base)
   if (existsSync(stampPath) && readFileSync(stampPath, 'utf8') === hash) {
     console.log(`[slidev] ${dir}: up to date`)
     return
   }
   console.log(`[slidev] ${dir}: building with base ${base}`)
-  if (!existsSync(join(dir, 'node_modules')))
-    execFileSync('npm', ['ci'], { cwd: dir, stdio: 'inherit' })
+  if (!existsSync(join(src, 'node_modules')))
+    execFileSync('npm', ['ci'], { cwd: src, stdio: 'inherit' })
   rmSync(out, { recursive: true, force: true })
-  execFileSync('npx', ['slidev', 'build', '--base', base, '--out', out], { cwd: dir, stdio: 'inherit' })
+  execFileSync('npx', ['slidev', 'build', '--base', base, '--out', out], { cwd: src, stdio: 'inherit' })
   mkdirSync(HASHES, { recursive: true })
   writeFileSync(stampPath, hash)
 }
@@ -66,7 +69,7 @@ export default function (config) {
   config.addPassthroughCopy({ [CACHE]: '/' })
 
   return {
-    dir: { input: 'site', output: '_site' },
+    dir: { input: 'src', output: '_build' },
     pathPrefix,
   }
 }

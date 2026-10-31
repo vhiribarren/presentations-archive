@@ -17,6 +17,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: _site
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -26,7 +29,7 @@ jobs:
           cache-dependency-path: '**/package-lock.json'
       - uses: actions/cache@v4
         with:
-          path: .cache
+          path: _site/_cache
           key: slidev-${{ github.sha }}
           restore-keys: slidev-
       - run: npm ci && npm run build
@@ -34,7 +37,7 @@ jobs:
           PATH_PREFIX: /${{ github.event.repository.name }}/
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: _site/_build
 
   deploy:
     needs: build
