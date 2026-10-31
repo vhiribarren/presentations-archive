@@ -24,8 +24,9 @@ repoUrl: https://github.com/vhiribarren/presentations-archive
     .date { color: var(--muted); font-size: .85rem; }
     .title { font-size: 1.15rem; font-weight: 600; }
     .desc { color: var(--muted); }
-    .source { position: absolute; top: 16px; right: 20px; font-size: .85rem; color: var(--muted); }
-    .source:hover { color: var(--accent); }
+    .links { position: absolute; top: 16px; right: 20px; display: flex; gap: 12px; font-size: .85rem; }
+    .links a { color: var(--muted); }
+    .links a:hover { color: var(--accent); }
     footer { margin-top: 40px; color: var(--muted); font-size: .85rem; }
     footer a { color: inherit; }
   </style>
@@ -46,13 +47,17 @@ repoUrl: https://github.com/vhiribarren/presentations-archive
           <span class="desc">{{ p.description }}</span>
           {%- endif %}
         </a>
-        <a class="source" href="{{ repoUrl }}/tree/main/{{ p.dir }}">source</a>
+        <span class="links">
+          <a href="./{{ p.dir }}/THIRD-PARTY-LICENSES.txt">third-party licenses</a>
+          <a href="{{ repoUrl }}/tree/main/{{ p.dir }}">source</a>
+        </span>
       </li>
       {%- endfor %}
     </ul>
     <footer>
       Content under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>, code under MIT ·
-      <a href="{{ repoUrl }}">GitHub</a>
+      <a href="{{ repoUrl }}">GitHub</a><br>
+      Built with <a href="https://sli.dev/">Slidev</a> and <a href="https://www.11ty.dev/">Eleventy</a>
     </footer>
   </main>
 </body>
