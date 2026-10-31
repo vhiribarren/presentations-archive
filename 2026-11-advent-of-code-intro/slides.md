@@ -8,6 +8,7 @@ info: |
 colorSchema: dark
 transition: slide-left
 duration: 30min
+routerMode: hash
 fonts:
   sans: Source Code Pro
   mono: Source Code Pro
@@ -425,31 +426,14 @@ print(s.model().eval(x + y + z))
 
 <div class="dim text-sm mt-2">2023 day 24: throw a rock that hits every hailstone. A few lines with Z3, a page of linear algebra without.</div>
 
----
-
-# Other useful tools
-
-<div class="grid grid-cols-2 gap-8">
-<div>
-
-### Libraries
-
-- **networkx**: graphs, shortest paths, min cut, cliques
-- **sympy**: symbolic equations
-- **numpy**: grids, matrices, convolutions
-- **z3 / PuLP / OR-Tools**: constraints and optimization
-
+<div class="box mt-4 text-sm toolbox">
+<strong>Also in the toolbox</strong>: <em>networkx</em> (graphs, min cut) · <em>sympy</em> (symbolic equations) · <em>numpy</em> (grids, matrices) · <em>Graphviz</em> (draw the input, the structure jumps out)
 </div>
-<div>
 
-### Look at things
-
-- **Graphviz**: draw the input graph, the structure jumps out
-- Print the grid at each step
-- A spreadsheet to spot patterns in numbers
-
-</div>
-</div>
+<style>
+.slidev-layout { --slidev-code-font-size: 0.75rem; --slidev-code-line-height: 1.35; }
+.toolbox { padding: 0.5rem 1rem; line-height: 1.6; }
+</style>
 
 ---
 
@@ -457,10 +441,7 @@ print(s.model().eval(x + y + z))
 
 - **Part 2 scales up**: the brute force that took 1 s now takes 3 000 years
 - **Integer overflow**: answers often exceed 32 bits (and 2⁵³ in JavaScript)
-- **Off-by-one**: "after 10 steps" vs "at step 10"
-- **Trailing newline** or Windows line endings in the input
 - **The example works, the input does not**: the input contains a case the example does not show
-- **Parsing** often takes half the time: read the format carefully
 - **Misreading the statement**: sometimes you solve part 2 before part 1 by accident!
 
 <div class="box mt-6">
@@ -651,6 +632,35 @@ Some people solve it in **a few lines** and **milliseconds**.<br>
 
 ---
 
+# Join us
+
+<div class="mt-10">
+
+<Leaderboards />
+
+</div>
+
+---
+layout: center
+class: text-center
+---
+
+# Thank you!
+
+<div class="text-6xl star my-8">*</div>
+
+Questions?
+
+<div class="dim text-sm mt-8">Vincent Hiribarren · November 2026</div>
+
+---
+layout: section
+---
+
+# Appendix
+
+---
+
 # My starting template
 
 <div class="grid grid-cols-[3fr_2fr] gap-6">
@@ -742,26 +752,3 @@ aoc-2026/
 .alts .head .pro { color: var(--aoc-green); text-shadow: 0 0 5px var(--aoc-green); }
 .alts .head .con { color: var(--aoc-red); text-shadow: 0 0 5px var(--aoc-red); }
 </style>
-
----
-
-# Join us
-
-<div class="mt-10">
-
-<Leaderboards />
-
-</div>
-
----
-layout: center
-class: text-center
----
-
-# Thank you!
-
-<div class="text-6xl star my-8">*</div>
-
-Questions?
-
-<div class="dim text-sm mt-8">Vincent Hiribarren · November 2026</div>
