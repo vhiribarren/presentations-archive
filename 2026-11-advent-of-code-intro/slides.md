@@ -105,49 +105,6 @@ day: 1
 
 ---
 
-# Why take part?
-
-<div class="grid grid-cols-3 gap-6 mt-8 why">
-
-<div class="box">
-
-### A shared moment
-
-Hundreds of thousands of people solve **the same puzzle on the same day**. Colleagues, Reddit, everyone talks about it.
-
-</div>
-
-<div class="box">
-
-### A rhythm
-
-One puzzle a day, for 12 days: a **short, visible commitment**. "Someday" never comes; December 1st does.
-
-</div>
-
-<div class="box">
-
-### Back to basics
-
-A break to **code by hand** again: write a BFS yourself, think about algorithms, away from frameworks and AI.
-
-</div>
-
-</div>
-
-<div class="text-center mt-10 dim">
-
-You could do this any time of the year. *Advent of Code is when everyone does it together.*
-
-</div>
-
-<style>
-.why h3 { margin-top: 0; margin-bottom: 0.8rem; }
-.why p { font-size: 0.95rem; line-height: 1.6; }
-</style>
-
----
-
 # How a day works
 
 <div class="grid grid-cols-2 gap-8">
@@ -195,6 +152,49 @@ Let's look: [adventofcode.com](https://adventofcode.com/2016)
 
 <style>
 .day-flow pre.ascii { line-height: 1.6; }
+</style>
+
+---
+
+# Why take part?
+
+<div class="grid grid-cols-3 gap-6 mt-8 why">
+
+<div class="box">
+
+### A shared moment
+
+Hundreds of thousands of people solve **the same puzzle on the same day**. Colleagues, Reddit, everyone talks about it.
+
+</div>
+
+<div class="box">
+
+### A rhythm
+
+One puzzle a day, for 12 days: a **short, visible commitment**. "Someday" never comes; December 1st does.
+
+</div>
+
+<div class="box">
+
+### Back to basics
+
+A break to **code by hand** again: write a BFS yourself, think about algorithms, away from frameworks and AI.
+
+</div>
+
+</div>
+
+<div class="text-center mt-10 dim">
+
+You could do this any time of the year. *Advent of Code is when everyone does it together.*
+
+</div>
+
+<style>
+.why h3 { margin-top: 0; margin-bottom: 0.8rem; }
+.why p { font-size: 0.95rem; line-height: 1.6; }
 </style>
 
 ---
