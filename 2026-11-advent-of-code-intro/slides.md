@@ -68,6 +68,14 @@ layout: section
 day: 1
 ---
 
+<pre class="ascii">+------+------+------+------+
+| <span class="t"> 1</span> <span class="y">*</span><span class="y">*</span>| <span class="t"> 2</span> <span class="y">*</span><span class="y">*</span>| <span class="t"> 3</span> <span class="y">*</span><span class="y">*</span>| <span class="t"> 4</span> <span class="y">*</span> |
++------+------+------+------+
+| <span class="t"> 5</span> <span class="y">*</span><span class="y">*</span>| <span class="t"> 6</span> <span class="y">*</span> | <span class="t"> 7</span>   | <span class="t"> 8</span>   |
++------+------+------+------+
+| <span class="t"> 9</span>   | <span class="t">10</span>   | <span class="t">11</span>   | <span class="t">12</span>   |
++------+------+------+------+</pre>
+
 # What is Advent of Code?
 
 ---
@@ -136,11 +144,15 @@ You could do this any time of the year. *Advent of Code is when everyone does it
 <div class="grid grid-cols-2 gap-8">
 <div>
 
-1. Read the story and the puzzle statement
-2. Look at the small **example** and its expected answer
-3. Download **your own input**: every participant gets a different one
-4. Submit the answer (just a number or a string) <span class="star">*</span>
-5. Part 2 unlocks: same input, a twist on the problem <span class="star">*</span>
+<pre class="ascii">[ <span class="t">read the story   </span> ]
+          |
+[ <span class="t">solve the example</span> ] -&gt; <span class="d">expected answer given</span>
+          |
+[ <span class="t">run on your input</span> ] -&gt; <span class="d">unique to every player</span>
+          |
+[ <span class="t">submit the answer</span> ] -&gt; <span class="y">*</span>
+          |
+[ <span class="t">part 2 unlocks   </span> ] -&gt; <span class="y">*</span><span class="y">*</span> <span class="d">same input, a twist</span></pre>
 
 </div>
 <div>
@@ -181,8 +193,14 @@ Let's look: [adventofcode.com](https://adventofcode.com/2016)
 
 ### Difficulty curve
 
-- First days: a warm-up, 10–20 minutes
-- Then it ramps up, but not steadily: an easy day can follow a hard one
+<pre class="ascii"><span class="d">hard</span> |                         <span class="y">*</span>        <span class="y">*</span>
+     |                   <span class="y">*</span>           <span class="y">*</span>
+     |             <span class="y">*</span>        <span class="y">*</span>     <span class="y">*</span>
+     |       <span class="y">*</span>  <span class="y">*</span>     <span class="y">*</span>
+<span class="d">easy</span> | <span class="y">*</span>  <span class="y">*</span>
+     +------------------------------------
+      <span class="d"> 1     3     5     7     9    11  day</span></pre>
+
 - **Difficulty is personal**: one person's 10 minutes is another's evening, depending on what you already know
 - **Part 2** often turns a naive solution into one that runs until next Christmas
 
@@ -279,6 +297,12 @@ layout: section
 day: 2
 ---
 
+<pre class="ascii">         .--------.
+.--------&#x27;--------&#x27;--------.
+| <span class="t">[BFS]</span>  <span class="t">[DP]</span>  <span class="t">[Z3]</span>        |
+| <span class="t">[dijkstra]</span>  <span class="t">[itertools]</span>  |
+&#x27;--------------------------&#x27;</pre>
+
 # Languages & toolbox
 
 <div class="reassure">
@@ -340,21 +364,21 @@ You'll meet these ideas one puzzle at a time, and that's where the learning is.
 </div>
 <div>
 
-```python
-def dijkstra(start, is_goal, neighbours):
-    queue, seen = [(0, start)], set()
-    while queue:
-        cost, node = heapq.heappop(queue)
-        if is_goal(node):
-            return cost
-        if node in seen:
-            continue
-        seen.add(node)
-        for nxt, w in neighbours(node):
-            heapq.heappush(queue, (cost + w, nxt))
-```
+<div class="text-center">
+<pre class="ascii maze"><span class="w">###################</span>
+<span class="w">#</span><span class="t">S</span><span class="y">OOOO</span><span class="w">#</span><span class="y">OOOOOOO</span><span class="w">#</span><span class="y">OOO</span><span class="w">#</span>
+<span class="w">#</span><span class="d">.</span><span class="w">###</span><span class="y">O</span><span class="w">#</span><span class="y">O</span><span class="w">#####</span><span class="y">O</span><span class="w">#</span><span class="y">O</span><span class="w">#</span><span class="y">O</span><span class="w">#</span>
+<span class="w">#</span><span class="d">.</span><span class="w">#</span><span class="y">OOO</span><span class="w">#</span><span class="y">O</span><span class="w">#</span><span class="d">...</span><span class="w">#</span><span class="y">OOO</span><span class="w">#</span><span class="y">O</span><span class="w">#</span>
+<span class="w">#</span><span class="d">.</span><span class="w">#</span><span class="y">O</span><span class="w">###</span><span class="y">O</span><span class="w">#</span><span class="d">.</span><span class="w">#</span><span class="d">.</span><span class="w">#####</span><span class="y">O</span><span class="w">#</span>
+<span class="w">#</span><span class="d">.</span><span class="w">#</span><span class="y">OOOOO</span><span class="w">#</span><span class="d">.</span><span class="w">#</span><span class="d">.....</span><span class="w">#</span><span class="y">O</span><span class="w">#</span>
+<span class="w">#</span><span class="d">.</span><span class="w">#######</span><span class="d">.</span><span class="w">#####</span><span class="d">.</span><span class="w">#</span><span class="y">O</span><span class="w">#</span>
+<span class="w">#</span><span class="d">.......</span><span class="w">#</span><span class="d">.....</span><span class="w">#</span><span class="d">..</span><span class="y">O</span><span class="w">#</span>
+<span class="w">#####</span><span class="d">.</span><span class="w">#</span><span class="d">.</span><span class="w">#####</span><span class="d">.</span><span class="w">###</span><span class="y">O</span><span class="w">#</span>
+<span class="w">#</span><span class="d">.....</span><span class="w">#</span><span class="d">.......</span><span class="w">#</span><span class="d">..</span><span class="t">E</span><span class="w">#</span>
+<span class="w">###################</span></pre>
+</div>
 
-<div class="dim text-sm mt-2">Write it once in December, reuse it five times.</div>
+<div class="dim text-sm mt-3 text-center">BFS from <strong>S</strong>: the first time you reach <strong>E</strong>, it's by the shortest path.</div>
 
 </div>
 </div>
@@ -472,6 +496,15 @@ layout: section
 day: 3
 ---
 
+<pre class="ascii">.----------------.      .------------------.
+| <span class="t">Part 2 runs</span>    |      | <span class="t">Have you tried</span>   |
+| <span class="t">forever...</span>     |      | <span class="t">memoization?</span>     |
+&#x27;----------------&#x27;      &#x27;------------------&#x27;
+         \                       /
+         o                       o
+        /|\                     /|\
+        / \                     / \</pre>
+
 # Community & etiquette
 
 ---
@@ -570,50 +603,32 @@ layout: section
 day: 4
 ---
 
+<pre class="ascii">.--------------------------------.
+| <span class="t">$ uv run src/day01.py</span>          |
+| <span class="d">Part 1: 1834060</span>                |
+| <span class="d">Part 2: 21607792</span>               |
+| <span class="t">That&#x27;s the right answer!</span> <span class="y">*</span>     |
+&#x27;--------------------------------&#x27;</pre>
+
 # Your turn
 
 ---
 
 # A learning loop
 
-<div class="grid grid-cols-4 gap-4 mt-8 loop">
-
-<div class="box">
-<div class="step">1</div>
-
-### Solve
-
-Your way, however ugly. Get the&nbsp;star&nbsp;<span class="star">*</span>
-
-</div>
-
-<div class="box">
-<div class="step">2</div>
-
-### Clean up
-
-Rename, extract, make it readable
-
-</div>
-
-<div class="box">
-<div class="step">3</div>
-
-### Ask an LLM
-
-"Can this be simpler?" You may discover a new technique
-
-</div>
-
-<div class="box">
-<div class="step">4</div>
-
-### Read others
-
-The Reddit megathread: other languages, other ideas
-
-</div>
-
+<div class="flex justify-center mt-4 loop">
+<pre class="ascii">.--------------------------.        .--------------------------.
+| <span class="t">1 Solve</span>                  | -----&gt; | <span class="t">2 Clean up</span>               |
+| <span class="d">your way, however ugly</span>   |        | <span class="d">rename, extract,</span>         |
+| <span class="d">get the star <span class="y">*</span></span>           |        | <span class="d">make it readable</span>         |
+&#x27;--------------------------&#x27;        &#x27;--------------------------&#x27;
+              ^                                   |
+              |                                   v
+.--------------------------.        .--------------------------.
+| <span class="t">4 Read others</span>            | &lt;----- | <span class="t">3 Ask an LLM</span>             |
+| <span class="d">the Reddit megathread:</span>   |        | <span class="d">&quot;can this be simpler?&quot;</span>   |
+| <span class="d">other languages, ideas</span>   |        | <span class="d">learn a new technique</span>    |
+&#x27;--------------------------&#x27;        &#x27;--------------------------&#x27;</pre>
 </div>
 
 <div class="text-center mt-10">
@@ -624,10 +639,7 @@ Some people solve it in **a few lines** and **milliseconds**.<br>
 </div>
 
 <style>
-.loop .box { position: relative; padding-top: 1.6rem; }
-.loop .step { position: absolute; top: -0.9rem; left: 1rem; background: var(--aoc-bg); padding: 0 0.4rem; color: var(--aoc-star); text-shadow: 0 0 5px var(--aoc-star); font-size: 1.2rem; }
-.loop h3 { margin-top: 0; margin-bottom: 0.6rem; }
-.loop p { font-size: 0.9rem; line-height: 1.5; }
+.loop .ascii { font-size: 0.95rem; }
 </style>
 
 ---
