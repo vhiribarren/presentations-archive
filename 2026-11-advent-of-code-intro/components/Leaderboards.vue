@@ -15,11 +15,11 @@ const boards: Leaderboard[] = Object.values(files)[0] ?? []
     </div>
   </div>
   <div v-if="boards.length" class="dim text-center mt-6">
-    adventofcode.com → Leaderboard → Private Leaderboard → Join
+    Leaderboard → Private Leaderboard → Join
   </div>
   <div v-else class="text-center">
     <div class="text-xl">Create a <strong>private leaderboard</strong> for your team</div>
-    <div class="dim mt-6">adventofcode.com → Leaderboard → Private Leaderboard → Create</div>
+    <div class="dim mt-6">Leaderboard → Private Leaderboard → Create</div>
   </div>
 </template>
 

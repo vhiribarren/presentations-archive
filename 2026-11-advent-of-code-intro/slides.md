@@ -634,11 +634,18 @@ Some people solve it in **a few lines** and **milliseconds**.<br>
 
 # Join us
 
-<div class="mt-10">
+<div class="aoc-url"><a href="https://adventofcode.com">adventofcode.com</a></div>
+
+<div class="mt-8">
 
 <Leaderboards />
 
 </div>
+
+<style>
+.aoc-url { text-align: center; font-size: 2.6rem; margin-top: 1.5rem; }
+.aoc-url a { color: var(--aoc-green); text-shadow: 0 0 2px var(--aoc-green), 0 0 5px var(--aoc-green); }
+</style>
 
 ---
 layout: center
