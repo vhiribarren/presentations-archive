@@ -1,10 +1,12 @@
 import { execFileSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { join, resolve } from 'node:path'
+import { Liquid } from 'liquidjs'
 
-// Builds the whole site: the index page, and each Slidev deck listed in
-// presentations.json into _build/<dir>/.
+// Builds the whole site into _build/: each Slidev deck listed in
+// presentations.json into _build/<dir>/, and the index page from
+// src/index.liquid.
 //
 // Decks are built into _cache/slidev/<dir>/ and only rebuilt when their files
 // (as seen by git, local changes included) or the base path change.
@@ -13,13 +15,10 @@ import { join, resolve } from 'node:path'
 
 // Presentations live at the root of the repository, one level up.
 const ROOT = '..'
+const OUT = '_build'
 const CACHE = '_cache/slidev'
 const HASHES = '_cache/slidev-hashes'
-
-function loadPresentations() {
-  return JSON.parse(readFileSync('presentations.json', 'utf8'))
-    .sort((a, b) => b.date.localeCompare(a.date))
-}
+const REPO_URL = 'https://github.com/vhiribarren/presentations-archive'
 
 function contentHash(dir, base) {
   const hash = createHash('sha256').update(base)
@@ -50,26 +49,27 @@ function buildDeck(dir, base) {
   writeFileSync(stampPath, hash)
 }
 
-export default function (config) {
-  const pathPrefix = `/${(process.env.PATH_PREFIX ?? '').replace(/^\/+|\/+$/g, '')}/`.replace('//', '/')
-
-  config.setLiquidOptions({ outputEscape: 'escape' })
-
-  config.addGlobalData('presentations', loadPresentations)
-
-  config.addFilter('monthYear', (yearMonth) => {
-    const [year, month] = yearMonth.split('-').map(Number)
-    return new Date(Date.UTC(year, month - 1)).toLocaleDateString('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' })
-  })
-
-  config.on('eleventy.before', () => {
-    for (const { dir } of loadPresentations())
-      buildDeck(dir, `${pathPrefix}${dir}/`)
-  })
-  config.addPassthroughCopy({ [CACHE]: '/' })
-
-  return {
-    dir: { input: 'src', output: '_build' },
-    pathPrefix,
-  }
+function monthYear(yearMonth) {
+  const [year, month] = yearMonth.split('-').map(Number)
+  return new Date(Date.UTC(year, month - 1)).toLocaleDateString('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' })
 }
+
+function renderIndex(presentations) {
+  const liquid = new Liquid({ root: 'src', outputEscape: 'escape' })
+  liquid.registerFilter('monthYear', monthYear)
+  return liquid.renderFileSync('index.liquid', { presentations, repoUrl: REPO_URL })
+}
+
+const pathPrefix = `/${(process.env.PATH_PREFIX ?? '').replace(/^\/+|\/+$/g, '')}/`.replace('//', '/')
+const presentations = JSON.parse(readFileSync('presentations.json', 'utf8'))
+  .sort((a, b) => b.date.localeCompare(a.date))
+
+for (const { dir } of presentations)
+  buildDeck(dir, `${pathPrefix}${dir}/`)
+
+rmSync(OUT, { recursive: true, force: true })
+mkdirSync(OUT, { recursive: true })
+for (const { dir } of presentations)
+  cpSync(join(CACHE, dir), join(OUT, dir), { recursive: true })
+writeFileSync(join(OUT, 'index.html'), renderIndex(presentations))
+console.log(`[site] ${OUT}/ ready`)
