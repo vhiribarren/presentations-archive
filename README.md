@@ -2,6 +2,7 @@
 
 Archive of my talks, one directory per presentation.
 
+- [A Tour of Rust](./2026-12-rust-tour/) (December 2026)
 - [Advent of Code: an introduction](./2026-11-advent-of-code-intro/) (November 2026)
 
 Also published on <https://www.alea.net/presentations-archive/>; see [_site/](./_site/) for how the website is built.
